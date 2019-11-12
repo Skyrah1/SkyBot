@@ -10,6 +10,10 @@ const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
     }
 });
 
+function errorMessage(msg){
+    msg.channel.send("???");
+}
+
 client.on("ready", () => {
     console.log("IT'S ALIIIIIIVE!")
     console.log(`*cough cough* ${client.user.tag} is online.`)
@@ -18,9 +22,17 @@ client.on("ready", () => {
 client.on("message", msg => {
     if (msg.content === "!helloWorld"){
         //msg.reply("Hello ZA WARUDO\nTOKI GA TOMARE!!!");
-        msg.channel.send("Hello ZA WARUDO\nTOKI GA TOMARE!!!");
+        msg.channel.send("Hello World!\n" +
+            "We meet again.");
     } else if (msg.content === "!testPingReply"){
         msg.channel.send(`${msg.author.toString()}`);
+    } else if (msg.content.startsWith("!testPing ")){
+        let userID = msg.mentions.users.first();
+        if (userID == undefined){
+            errorMessage(msg)
+        } else {
+            msg.channel.send(`${userID} is a NERDDDDDD`);
+        }
     }
 });
 
