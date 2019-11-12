@@ -21,14 +21,14 @@ client.on("ready", () => {
 
 client.on("message", msg => {
     if (msg.content === "!helloWorld"){
-        //msg.reply("Hello ZA WARUDO\nTOKI GA TOMARE!!!");
         msg.channel.send("Hello World!\n" +
             "We meet again.");
-    } else if (msg.content === "!testPingReply"){
+    }
+    if (msg.content === "!testPingReply"){
         msg.channel.send(`${msg.author.toString()}`);
-    } else if (msg.content.startsWith("!testPing ")){
+    } else if (msg.content.startsWith("!testPing")){
         let userID = msg.mentions.users.first();
-        if (userID == undefined){
+        if (userID == undefined || userID === ""){
             errorMessage(msg)
         } else {
             msg.channel.send(`${userID} is a NERDDDDDD`);
