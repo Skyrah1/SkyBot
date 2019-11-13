@@ -1,5 +1,6 @@
 const fs = require("fs");
 const Discord = require("discord.js");
+const reply = require("./reply");
 const client = new Discord.Client();
 const fileName = "loginToken";
 const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
@@ -12,27 +13,21 @@ const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
 
 function errorMessage(msg){
     msg.channel.send("???");
-}
+};
 
 client.on("ready", () => {
-    console.log("IT'S ALIIIIIIVE!")
-    console.log(`*cough cough* ${client.user.tag} is online.`)
+    console.log("IT'S ALIIIIIIVE!");
+    console.log(`*cough cough* ${client.user.tag} is online.`);
 });
 
 client.on("message", msg => {
-    if (msg.content === "!helloWorld"){
-        msg.channel.send("Hello World!\n" +
-            "We meet again.");
+    let prefix = "!sky ";
+    var validMessage = true;
+    if (msg.content.startsWith(prefix)){
+        validMessage = reply.reply(prefix, client, msg);
     }
-    if (msg.content === "!testPingReply"){
-        msg.channel.send(`${msg.author.toString()}`);
-    } else if (msg.content.startsWith("!testPing")){
-        let userID = msg.mentions.users.first();
-        if (userID == undefined || userID === ""){
-            errorMessage(msg)
-        } else {
-            msg.channel.send(`${userID} is a NERDDDDDD`);
-        }
+    if (!validMessage){
+        errorMessage(msg)
     }
 });
 
