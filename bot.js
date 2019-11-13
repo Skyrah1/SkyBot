@@ -10,6 +10,13 @@ const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
         return data;
     }
 });
+const creatorID = fs.readFileSync("creatorID", "utf-8", (err, data) => {
+    if (err){
+        return err;
+    } else {
+        return data;
+    }
+});
 
 function errorMessage(msg){
     msg.channel.send("???");
@@ -24,7 +31,7 @@ client.on("message", msg => {
     let prefix = "!sky ";
     var validMessage = true;
     if (msg.content.startsWith(prefix)){
-        validMessage = reply.reply(prefix, client, msg);
+        validMessage = reply.reply(creatorID, prefix, client, msg);
     }
     if (!validMessage){
         errorMessage(msg)
