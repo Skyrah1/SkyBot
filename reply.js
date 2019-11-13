@@ -2,20 +2,35 @@
 
 function reply(prefix, client, msg){
     var validMessage = true;
-    let command = msg.content.replace(prefix, "");
-    if (command === "helloWorld"){
-        msg.channel.send("Hello World!\n" +
-            "We meet again.");
-    }
-    if (command === "testPingReply"){
-        msg.channel.send(`${msg.author.toString()}`);
-    } else if (command.startsWith("testPing")){
+    var commands = msg.content.replace(prefix, "")
+        .split(" ");
+    var message = "";
+
+    if (commands.length === 1){
+        if (commands[0] === "helloWorld"){
+            message = "Hello World!\n" +
+                "...we've been over this.\n";
+            if (msg.guild.members.get("Skyrah1#4602")){
+                message += `${msg.guild.members.get('Skyrah1#4602').displayName}
+                write me more dialogue!`;
+            } else {
+                message += "I'll ask my creator to write me more dialogue."
+            }
+        }
+        if (commands[0] === "testPingReply"){
+            message = `${msg.author.toString()}`;
+        }
+    } else if (commands[0] === "testPing"){
         let userID = msg.mentions.users.first();
         if (userID == undefined || userID === ""){
             validMessage = false;
         } else {
-            msg.channel.send(`${userID} is a NERDDDDDD`);
+            message = `${userID} is a NERDDDDDD`;
         }
+    }
+
+    if (validMessage){
+        msg.channel.send(message);
     }
     return validMessage;
 }
