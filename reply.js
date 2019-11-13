@@ -31,6 +31,19 @@ function reply(creatorID, prefix, client, msg) {
                 }
             }
             break;
+        case "rand":
+            var result = 0;
+            if (commands.length === 2){
+                result = rng(0, commands[1]);
+            } else if (commands.length === 3){
+                result = rng(commands[1], commands[2]);
+            }
+            if (result != 20){
+                message += `${msg.author.toString()} got a ${result.toString()}!`;
+            } else {
+                message += '"Roll for luck."\n"TWENTY!"\n"Not good enough."\n"wait wha-"';
+            }
+            break;
         default:
             validMessage = false;
             break;
@@ -41,6 +54,21 @@ function reply(creatorID, prefix, client, msg) {
         msg.channel.send(message);
     }
     return validMessage;
+}
+
+function rng(min, max){
+    //console.log(`Min and max: ${min}, ${max}`);
+    var difference = parseInt(max) - parseInt(min);
+    var result = 0;
+    if (difference != max){
+        result = Math.floor((Math.random() * (difference + 1)));
+        result += parseInt(min);
+    } else {
+        result = Math.floor((Math.random() * max) + 1);
+    }
+    //console.log(result);
+    //console.log(result);
+    return result;
 }
 
 module.exports = {
