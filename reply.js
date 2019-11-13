@@ -1,37 +1,42 @@
 //const Discord = require("discord.js");
 
-function reply(creatorID, prefix, client, msg){
+function reply(creatorID, prefix, client, msg) {
     var validMessage = true;
     var commands = msg.content.replace(prefix, "")
         .split(" ");
     var message = "";
 
+    //console.log(`User: ${client.user.id}`);
     console.log(commands[0]);
-    if (commands.length === 1){
-        if (commands[0] === "helloWorld"){
+    switch (commands[0]) {
+        case "helloWorld":
             message = "Hello World!\n" +
                 "...we've been over this.\n";
-            if (msg.guild != null && msg.guild.members.get(creatorID)){
+            if (msg.guild != null && msg.guild.members.get(creatorID)) {
                 message += `${msg.guild.members.get(creatorID).toString()}` +
-                ` write me more dialogue!`;
+                    ` write me more dialogue!`;
             } else {
                 message += "I'll ask my creator to write me more dialogue."
             }
-        }
-        if (commands[0] === "testPingReply"){
+            break;
+        case "testPingReply":
             message = `${msg.author.toString()}`;
-        }
-    } else if (commands[0] === "testPing") {
-        let userArray = msg.mentions.users.array();
-        for (i in userArray) {
-            console.log(userArray[i].toString());
-            message += `${userArray[i]} is a NERDDDDDD\n`;
-        }
-    } else {
-        validMessage = false;
+            break;
+        case "testPing":
+            let userArray = msg.mentions.users.array();
+            for (i in userArray) {
+                message += `${userArray[i]} is a NERDDDDDD\n`;
+                if (client.user.id === userArray[i].id){
+                    message += "...wait a minute.\n\n**DID YOU JUST-**";
+                }
+            }
+            break;
+        default:
+            validMessage = false;
+            break;
     }
 
-    if (validMessage){
+    if (validMessage) {
         console.log(message);
         msg.channel.send(message);
     }
