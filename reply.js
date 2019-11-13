@@ -6,6 +6,7 @@ function reply(creatorID, prefix, client, msg){
         .split(" ");
     var message = "";
 
+    console.log(commands[0]);
     if (commands.length === 1){
         if (commands[0] === "helloWorld"){
             message = "Hello World!\n" +
@@ -20,16 +21,18 @@ function reply(creatorID, prefix, client, msg){
         if (commands[0] === "testPingReply"){
             message = `${msg.author.toString()}`;
         }
-    } else if (commands[0] === "testPing"){
-        let userID = msg.mentions.users.first();
-        if (userID == undefined || userID === ""){
-            validMessage = false;
-        } else {
-            message = `${userID} is a NERDDDDDD`;
+    } else if (commands[0] === "testPing") {
+        let userArray = msg.mentions.users.array();
+        for (i in userArray) {
+            console.log(userArray[i].toString());
+            message += `${userArray[i]} is a NERDDDDDD\n`;
         }
+    } else {
+        validMessage = false;
     }
 
     if (validMessage){
+        console.log(message);
         msg.channel.send(message);
     }
     return validMessage;
