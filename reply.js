@@ -1,13 +1,14 @@
 //const Discord = require("discord.js");
 const c = require("./command");
 
+var botClient;
 var message;
 var messageString = "";
 var creatorID;
 
 const validCommands = [];
 
-validCommands.push(new c.Command("helloWorld", (args) => {
+validCommands.push(new c.Command("helloWorld", () => {
     messageString = "Hello World!\n" +
         "...we've been over this.\n";
     if (message.guild != null && message.guild.members.get(creatorID)) {
@@ -19,17 +20,25 @@ validCommands.push(new c.Command("helloWorld", (args) => {
     return true;
 }));
 
-validCommands.push(new c.Command("testPingReply", (args) => {
-    messageString = `${message.author.toString()}`;
+validCommands.push(new c.Command("testPingReply", () => {
+    messageString = `I see you, ${message.author.toString()}.`;
+    return true;
 }));
 
-validCommands.push(new c.Command("testPing", (args) => {
+validCommands.push(new c.Command("testPing", () => {
     let userArray = message.mentions.users.array();
+    let gottem = false;
+    if (userArray.length === 0){
+        return false;
+    }
     for (i in userArray) {
         messageString += `${userArray[i]} is a NERDDDDDD\n`;
-        if (client.user.id === userArray[i].id) {
-            messageString += "...wait a minute.\n\n**DID YOU JUST-**";
+        if (botClient.user.id === userArray[i].id) {
+            gottem = true;
         }
+    }
+    if (gottem){
+        messageString += "...wait a minute.\n\n**DID YOU JUST-**";
     }
     return true;
 }));
@@ -61,6 +70,7 @@ function reply(cID, prefix, client, msg) {
     message = msg;
     messageString = "";
     creatorID = cID;
+    botClient = client
     var validMessage = false;
     var commandKeyword = msg.content.replace(prefix, "")
         .split(" ")[0];
