@@ -2,7 +2,7 @@ const fs = require("fs");
 const Discord = require("discord.js");
 const reply = require("./reply");
 const client = new Discord.Client();
-const fileName = "loginToken";
+const fileName = "login/loginToken";
 const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
     if (err){
         return err;
@@ -10,7 +10,7 @@ const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
         return data;
     }
 });
-const creatorID = fs.readFileSync("creatorID", "utf-8", (err, data) => {
+const creatorID = fs.readFileSync("login/creatorID", "utf-8", (err, data) => {
     if (err){
         return err;
     } else {
