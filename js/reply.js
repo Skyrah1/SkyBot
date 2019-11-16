@@ -17,11 +17,13 @@ validCommands.push(new c.Command("helloWorld", () => {
     } else {
         messageString += "I'll ask my creator to write me more dialogue."
     }
+    message.channel.send(messageString);
     return true;
 }));
 
 validCommands.push(new c.Command("testPingReply", () => {
     messageString = `I see you, ${message.author.toString()}.`;
+    message.channel.send(messageString);
     return true;
 }));
 
@@ -40,6 +42,7 @@ validCommands.push(new c.Command("testPing", () => {
     if (gottem){
         messageString += "...wait a minute.\n\n**DID YOU JUST-**";
     }
+    message.channel.send(messageString);
     return true;
 }));
 
@@ -57,12 +60,14 @@ validCommands.push(new c.Command("rand", (args) => {
     } else {
         messageString += `"Roll for luck, ${message.author.toString()}."\n"TWENTY!"\n"Not good enough."\n"wait wha-"`;
     }
+    message.channel.send(messageString);
     return true;
 
 }));
 
 validCommands.push(new c.Command("Tate", () => {
-
+    sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    return true;
 }));
 
 
@@ -92,7 +97,6 @@ function reply(cID, prefix, client, msg) {
 
     if (validMessage) {
         console.log(messageString);
-        msg.channel.send(messageString);
     }
     return validMessage;
 }
@@ -110,6 +114,12 @@ function rng(min, max) {
     console.log(result);
     //console.log(result);
     return result;
+}
+
+function sendImage(string, image){
+    message.channel.send(`${string}\n`, {
+        files: [image]
+    });
 }
 
 module.exports = {
