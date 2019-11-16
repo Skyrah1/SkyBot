@@ -61,6 +61,10 @@ validCommands.push(new c.Command("rand", (args) => {
 
 }));
 
+validCommands.push(new c.Command("Tate", () => {
+
+}));
+
 
 for (let i = 0; i < validCommands.length; i++) {
     console.log(validCommands[i].toString());
