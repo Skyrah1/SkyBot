@@ -108,6 +108,26 @@ validCommands.push(new c.Command("DM", () => {
     return true;
 }));
 
+validCommands.push(new c.Command("iLoveYou", () =>{
+    const responses = [
+        `I love you too, ${message.author.toString()}.\n`,
+        "Thanks!",
+        "Me too.",
+        "A horrible decision, really.",
+        "Who doesn't?",
+        "why",
+        "*laughs nervously*",
+        "*laughs hysterically*",
+        "**YEET**",
+        "I'm sorry",
+        "*finger guns*"
+    ];
+    let i = rng(0, responses.length) - 1;
+    messageString = responses[i];
+    message.channel.send(messageString);
+    return true;
+}));
+
 
 for (let i = 0; i < validCommands.length; i++) {
     console.log(validCommands[i].toString());
