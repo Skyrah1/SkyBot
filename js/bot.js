@@ -23,6 +23,13 @@ function errorMessage(msg){
 };
 
 client.on("ready", () => {
+    client.user.setStatus("available");
+    client.user.setPresence({
+        game: {
+            type: "PLAYING",
+            name: `with my creator's feelings`
+        }
+    })
     console.log("IT'S ALIIIIIIVE!");
     console.log(`*cough cough* ${client.user.tag} is online.`);
 });
