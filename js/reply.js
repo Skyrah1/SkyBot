@@ -66,7 +66,45 @@ validCommands.push(new c.Command("rand", (args) => {
 }));
 
 validCommands.push(new c.Command("Tate", () => {
-    sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    sendImage(
+        `A cinnamon roll capable of breaking your knees and smashing your skull in.\n`
+        + `(image created on LogoMakr.com)\n`,
+        "icons/tate.PNG");
+    return true;
+}));
+validCommands.push(new c.Command("Phibi", () => {
+    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    message.channel.send("Soon...");
+    return true;
+}));
+validCommands.push(new c.Command("Gaia", () => {
+    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    message.channel.send("Soon...");
+    return true;
+}));
+validCommands.push(new c.Command("Rembrandt", () => {
+    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    message.channel.send("Soon...");
+    return true;
+}));
+validCommands.push(new c.Command("Stormchaser", () => {
+    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    message.channel.send("Soon...");
+    return true;
+}));
+validCommands.push(new c.Command("Alistar", () => {
+    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    message.channel.send("Soon...");
+    return true;
+}));
+validCommands.push(new c.Command("See-rius", () => {
+    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    message.channel.send("Soon...");
+    return true;
+}));
+validCommands.push(new c.Command("DM", () => {
+    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
+    message.channel.send("Soon...");
     return true;
 }));
 
