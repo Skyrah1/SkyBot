@@ -111,6 +111,7 @@ validCommands.push(new c.Command("DM", () => {
 validCommands.push(new c.Command("iLoveYou", () =>{
     const responses = [
         `I love you too, ${message.author.toString()}.\n`,
+        "I know.",
         "Thanks!",
         "Me too.",
         "A horrible decision, really.",
