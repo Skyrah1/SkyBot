@@ -39,6 +39,9 @@ client.on("message", msg => {
     var validMessage = true;
     if (msg.content.startsWith(prefix)){
         validMessage = reply.reply(creatorID, prefix, client, msg);
+        if (validMessage){
+            console.log("Message sent!");
+        }
     }
     if (!validMessage){
         errorMessage(msg)

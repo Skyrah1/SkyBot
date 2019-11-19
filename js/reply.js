@@ -1,5 +1,7 @@
 //const Discord = require("discord.js");
-const c = require("./command");
+const commandLib = require("./command");
+const comboLib = require("./combo");
+
 const fs = require("fs");
 const comboDir = "comboDir";
 
@@ -9,8 +11,9 @@ var messageString = "";
 var creatorID;
 
 const validCommands = [];
+//const comboList = [];
 
-validCommands.push(new c.Command("helloWorld", () => {
+validCommands.push(new commandLib.Command("helloWorld", () => {
     messageString = "Hello World!\n" +
         "...we've been over this.\n";
     if (message.guild != null && message.guild.members.get(creatorID)) {
@@ -23,13 +26,13 @@ validCommands.push(new c.Command("helloWorld", () => {
     return true;
 }));
 
-validCommands.push(new c.Command("testPingReply", () => {
+validCommands.push(new commandLib.Command("testPingReply", () => {
     messageString = `I see you, ${message.author.toString()}.`;
     message.channel.send(messageString);
     return true;
 }));
 
-validCommands.push(new c.Command("testPing", () => {
+validCommands.push(new commandLib.Command("testPing", () => {
     let userArray = message.mentions.users.array();
     let gottem = false;
     if (userArray.length === 0){
@@ -48,7 +51,7 @@ validCommands.push(new c.Command("testPing", () => {
     return true;
 }));
 
-validCommands.push(new c.Command("rand", (args) => {
+validCommands.push(new commandLib.Command("rand", (args) => {
     var result = 0;
     if (args.length === 1) {
         result = rng(0, args[0]);
@@ -67,50 +70,50 @@ validCommands.push(new c.Command("rand", (args) => {
 
 }));
 
-validCommands.push(new c.Command("Tate", () => {
+validCommands.push(new commandLib.Command("Tate", () => {
     sendImage(
         `A cinnamon roll capable of breaking your knees and smashing your skull in.\n`
         + `(image created on LogoMakr.com)\n`,
         "icons/tate.PNG");
     return true;
 }));
-validCommands.push(new c.Command("Phibi", () => {
+validCommands.push(new commandLib.Command("Phibi", () => {
     //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new c.Command("Gaia", () => {
+validCommands.push(new commandLib.Command("Gaia", () => {
     //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new c.Command("Rembrandt", () => {
+validCommands.push(new commandLib.Command("Rembrandt", () => {
     //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new c.Command("Stormchaser", () => {
+validCommands.push(new commandLib.Command("Stormchaser", () => {
     //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new c.Command("Alistar", () => {
+validCommands.push(new commandLib.Command("Alistar", () => {
     //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new c.Command("See-rius", () => {
+validCommands.push(new commandLib.Command("See-rius", () => {
     //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new c.Command("DM", () => {
+validCommands.push(new commandLib.Command("DM", () => {
     //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
 
-validCommands.push(new c.Command("iLoveYou", () => {
+validCommands.push(new commandLib.Command("iLoveYou", () => {
     const responses = [
         `I love you too, ${message.author.toString()}.\n`,
         "I know.",
@@ -131,19 +134,38 @@ validCommands.push(new c.Command("iLoveYou", () => {
     return true;
 }));
 
-validCommands.push(new c.Command("comboList", () => {
-    fs.readdirSync(comboDir).forEach(file => {
-        console.log(file.toString());
-        var fileString = comboDir + "/" + file
-        var comboName = fs.readFileSync(fileString, "utf-8", (err, data) => {
-            if (err){
-                return err;
-            } else {
-                return data;
-            }
-        }).split("\n")[0];
-        console.log(comboName);
-    });
+validCommands.push(new commandLib.Command("comboList", () => {
+    //comboList.clean();
+    messageString += "Here is the list of combo keywords:\n\n";
+    const comboList = getComboList();
+    for (i = 0; i < comboList.length; i++){
+        messageString += `- ${comboList[i].getKeyword()}\n`;
+    }
+    messageString += `\nTo actually see what they do, use the "combo" command\n` +
+                        "(i.e. !sky combo [combo keyword])\n" +
+                        "Example: !sky combo crash_and_burn";
+    message.channel.send(messageString);
+    return true;
+}));
+
+validCommands.push(new commandLib.Command("combo", (args) => {
+    const comboList = getComboList();
+    var comboFound = false;
+    console.log(`${comboList.length}`);
+    for (i = 0; i < comboList.length && !comboFound; i++){
+        const combo = comboList[i];
+        console.log(`${combo.getKeyword()}, ${args[0]}...`);
+        if (combo.getKeyword() == args[0]){
+            comboFound = true;
+            messageString += `**${combo.getName()}**\n`;
+            messageString += `${combo.getDescription()}\n\n`;
+            messageString += `*${combo.getFlavour()}*`;
+        }
+    }
+    if (!comboFound){
+        messageString = `Sorry ${message.author.toString()}, that combo doesn't seem to be added to my files (yet)!`
+    }
+    message.channel.send(messageString);
     return true;
 }));
 
@@ -156,7 +178,7 @@ function reply(cID, prefix, client, msg) {
     message = msg;
     messageString = "";
     creatorID = cID;
-    botClient = client
+    botClient = client;
     var validMessage = false;
     var commandKeyword = msg.content.replace(prefix, "")
         .split(" ")[0];
@@ -165,6 +187,7 @@ function reply(cID, prefix, client, msg) {
         .split(" ");
 
     //console.log(`User: ${client.user.id}`);
+    console.log(`Arguments: ${args}`);
     console.log(commandKeyword);
     console.log(args.toString());
 
@@ -197,6 +220,37 @@ function sendImage(string, image){
     message.channel.send(`${string}\n`, {
         files: [image]
     });
+}
+
+function getComboList(){
+    var comboList = [];
+    fs.readdirSync(comboDir).forEach(file => {
+        //console.log(file);
+        var fileString = comboDir + "/" + file;
+        var comboArgs = fs.readFileSync(fileString, "utf-8", (err, data) => {
+            if (err){
+                return err;
+            } else {
+                return data;
+            }
+        }).split("\n");
+        //console.log(comboName);
+        if (comboArgs.length >= 3){
+            var keyword = file.toString().replace(".txt", "");
+            var comboFlavor = "";
+            for (i = 2; i < comboArgs.length; i++){
+                comboFlavor += comboArgs[i];
+                if (i != comboArgs.length - 1){
+                    comboFlavor += "\n";
+                }
+            }
+            comboList.push(new comboLib.Combo(keyword,comboArgs[0], comboArgs[1], comboFlavor));
+            //console.log(comboArgs[0]);
+        } else {
+            console.log(`Invalid/incomplete combo file: ${file}`)
+        }
+    });
+    return comboList;
 }
 
 module.exports = {
