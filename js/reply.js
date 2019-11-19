@@ -1,5 +1,7 @@
 //const Discord = require("discord.js");
 const c = require("./command");
+const fs = require("fs");
+const comboDir = "comboDir";
 
 var botClient;
 var message;
@@ -108,7 +110,7 @@ validCommands.push(new c.Command("DM", () => {
     return true;
 }));
 
-validCommands.push(new c.Command("iLoveYou", () =>{
+validCommands.push(new c.Command("iLoveYou", () => {
     const responses = [
         `I love you too, ${message.author.toString()}.\n`,
         "I know.",
@@ -126,6 +128,22 @@ validCommands.push(new c.Command("iLoveYou", () =>{
     let i = rng(0, responses.length) - 1;
     messageString = responses[i];
     message.channel.send(messageString);
+    return true;
+}));
+
+validCommands.push(new c.Command("comboList", () => {
+    fs.readdirSync(comboDir).forEach(file => {
+        console.log(file.toString());
+        var fileString = comboDir + "/" + file
+        var comboName = fs.readFileSync(fileString, "utf-8", (err, data) => {
+            if (err){
+                return err;
+            } else {
+                return data;
+            }
+        }).split("\n")[0];
+        console.log(comboName);
+    });
     return true;
 }));
 
