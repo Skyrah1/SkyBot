@@ -2,8 +2,6 @@
 const commandLib = require("./command");
 const comboLib = require("./combo");
 
-const fs = require("fs");
-const comboDir = "comboDir";
 
 var botClient;
 var message;
@@ -137,7 +135,7 @@ validCommands.push(new commandLib.Command("iLoveYou", () => {
 validCommands.push(new commandLib.Command("comboList", () => {
     //comboList.clean();
     messageString += "Here is the list of combo keywords:\n\n";
-    const comboList = getComboList();
+    const comboList = comboLib.getComboList();
     for (i = 0; i < comboList.length; i++){
         messageString += `- ${comboList[i].getKeyword()}\n`;
     }
@@ -149,7 +147,7 @@ validCommands.push(new commandLib.Command("comboList", () => {
 }));
 
 validCommands.push(new commandLib.Command("combo", (args) => {
-    const comboList = getComboList();
+    const comboList = comboLib.getComboList();
     var comboFound = false;
     console.log(`${comboList.length}`);
     for (i = 0; i < comboList.length && !comboFound; i++){
@@ -222,36 +220,7 @@ function sendImage(string, image){
     });
 }
 
-function getComboList(){
-    var comboList = [];
-    fs.readdirSync(comboDir).forEach(file => {
-        //console.log(file);
-        var fileString = comboDir + "/" + file;
-        var comboArgs = fs.readFileSync(fileString, "utf-8", (err, data) => {
-            if (err){
-                return err;
-            } else {
-                return data;
-            }
-        }).split("\n");
-        //console.log(comboName);
-        if (comboArgs.length >= 3){
-            var keyword = file.toString().replace(".txt", "");
-            var comboFlavor = "";
-            for (i = 2; i < comboArgs.length; i++){
-                comboFlavor += comboArgs[i];
-                if (i != comboArgs.length - 1){
-                    comboFlavor += "\n";
-                }
-            }
-            comboList.push(new comboLib.Combo(keyword,comboArgs[0], comboArgs[1], comboFlavor));
-            //console.log(comboArgs[0]);
-        } else {
-            console.log(`Invalid/incomplete combo file: ${file}`)
-        }
-    });
-    return comboList;
-}
+
 
 module.exports = {
     reply
