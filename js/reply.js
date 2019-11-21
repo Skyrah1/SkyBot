@@ -76,8 +76,9 @@ validCommands.push(new commandLib.Command("Tate", () => {
     return true;
 }));
 validCommands.push(new commandLib.Command("Phibi", () => {
-    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
-    message.channel.send("Soon...");
+    sendImage("She would die for you, if only she were capable of actually dying.\n"
+        + "(image created on LogoMakr.com)\n",
+        "icons/phibi.PNG");
     return true;
 }));
 validCommands.push(new commandLib.Command("Gaia", () => {
