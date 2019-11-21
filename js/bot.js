@@ -2,7 +2,7 @@ const fs = require("fs");
 const Discord = require("discord.js");
 const reply = require("./reply");
 const client = new Discord.Client();
-const fileName = "loginToken";
+const fileName = "login/loginToken";
 const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
     if (err){
         return err;
@@ -10,7 +10,7 @@ const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
         return data;
     }
 });
-const creatorID = fs.readFileSync("creatorID", "utf-8", (err, data) => {
+const creatorID = fs.readFileSync("login/creatorID", "utf-8", (err, data) => {
     if (err){
         return err;
     } else {
@@ -23,6 +23,13 @@ function errorMessage(msg){
 };
 
 client.on("ready", () => {
+    client.user.setStatus("available");
+    client.user.setPresence({
+        game: {
+            type: "PLAYING",
+            name: `with my creator's feelings`
+        }
+    })
     console.log("IT'S ALIIIIIIVE!");
     console.log(`*cough cough* ${client.user.tag} is online.`);
 });
@@ -32,6 +39,9 @@ client.on("message", msg => {
     var validMessage = true;
     if (msg.content.startsWith(prefix)){
         validMessage = reply.reply(creatorID, prefix, client, msg);
+        if (validMessage){
+            console.log("Message sent!");
+        }
     }
     if (!validMessage){
         errorMessage(msg)

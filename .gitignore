@@ -1,6 +1,5 @@
 
-loginToken
-creatorID
-comboDir
+login/*
 icons
-node_modules/*
+node_modules
+comboDir
