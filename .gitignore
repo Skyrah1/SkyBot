@@ -1,5 +1,6 @@
 
 loginToken
 creatorID
-
+comboDir
+icons
 node_modules/*
