@@ -82,8 +82,10 @@ validCommands.push(new commandLib.Command("Phibi", () => {
     return true;
 }));
 validCommands.push(new commandLib.Command("Gaia", () => {
-    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
-    message.channel.send("Soon...");
+    sendImage("Her mischievous antics belie a dark and painful past..."
+        + "but we don't have time to unpack *all* that.\n"
+        + "(image created on LogoMakr.com)\n",
+        "icons/gaia.PNG");
     return true;
 }));
 validCommands.push(new commandLib.Command("Rembrandt", () => {
