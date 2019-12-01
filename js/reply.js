@@ -89,7 +89,10 @@ validCommands.push(new commandLib.Command("Gaia", () => {
     return true;
 }));
 validCommands.push(new commandLib.Command("Rembrandt", () => {
-    message.channel.send("Soon...");
+    sendImage("You will know bitter while his victory will be sweet..."
+        + "or maybe that's just his brownies.\n"
+        + "(image created on LogoMakr.com)\n",
+        "icons/rembrandt.PNG");
     return true;
 }));
 validCommands.push(new commandLib.Command("Stormchaser", () => {
