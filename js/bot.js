@@ -3,21 +3,7 @@ const Discord = require("discord.js");
 const reply = require("./reply");
 const client = new Discord.Client();
 const fileName = "login/loginToken";
-/*
-const token = fs.readFileSync(fileName, "utf-8", (err, data) => {
-    if (err){
-        return err;
-    } else {
-        return data;
-    }
-});
-const creatorID = fs.readFileSync("login/creatorID", "utf-8", (err, data) => {
-    if (err){
-        return err;
-    } else {
-        return data;
-    }
-});*/
+
 const token = process.argv[2];
 console.log(token);
 const creatorID = process.argv[3];
