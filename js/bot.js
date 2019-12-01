@@ -1,6 +1,7 @@
 const fs = require("fs");
 const Discord = require("discord.js");
 const reply = require("./reply");
+const recorder = require("./recorder");
 const client = new Discord.Client();
 const fileName = "login/loginToken";
 
@@ -8,6 +9,8 @@ const token = process.argv[2];
 console.log(token);
 const creatorID = process.argv[3];
 console.log(creatorID);
+
+//recorder.recordForbiddenWord();
 
 function errorMessage(msg){
     msg.channel.send("???");
@@ -32,6 +35,35 @@ client.on("message", msg => {
         validMessage = reply.reply(creatorID, prefix, client, msg);
         if (validMessage){
             console.log("Message sent!");
+        }
+    }
+    if (msg.content.toLowerCase().includes("vore")){
+        let diff = recorder.recordForbiddenWord();
+        if (diff < 0){
+            msg.channel.send(`You leave me no choice, ${msg.author.toString()}.\n`
+                + `I have hereby started a counter to record the last time when someone`
+                + ` says the v-word. Your actions are now under scrutiny of She Who Shall Cast`
+                + ` The Net Unto The Sky.\n`
+                + `**Prepare to be judged.**`);
+        } else {
+            if (diff < 1){
+                msg.channel.send("Not even a day, huh...? Very well.");
+                let numOfMembers = 0;
+                if (msg.channel.members != undefined){
+                    numOfMembers = msg.channel.members.size;
+                } else {
+                    numOfMembers = 1;
+                }
+                msg.channel.send("In fealty to Arnold Schwarzenegger (our Undying Lord),"
+                    + ` and by the grace of the Golden Throne, I declare Exterminatus upon the channel ${msg.channel.name}.\n`
+                    + ` I hereby sign the Death Warrant of an entire world, and consign ${numOfMembers} souls to oblivion.`
+                    + ` May Imperial justice account in all balance.\n`
+                    + `SkyNet protects.`)
+            } else {
+                msg.channel.send(`Let it be know that on this day, ${msg.author.toString()}`
+                    + ` broke the taboo of uttering the v-word. It has been ${diff} days since`
+                    + ` the last incident occurred.\n`);
+            }
         }
     }
     if (!validMessage){

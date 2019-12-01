@@ -89,27 +89,22 @@ validCommands.push(new commandLib.Command("Gaia", () => {
     return true;
 }));
 validCommands.push(new commandLib.Command("Rembrandt", () => {
-    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
 validCommands.push(new commandLib.Command("Stormchaser", () => {
-    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
 validCommands.push(new commandLib.Command("Alistar", () => {
-    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
 validCommands.push(new commandLib.Command("See-rius", () => {
-    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
 validCommands.push(new commandLib.Command("DM", () => {
-    //sendImage(`"Oh, Torm..."`, "icons/tate.PNG");
     message.channel.send("Soon...");
     return true;
 }));
