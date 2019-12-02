@@ -185,7 +185,6 @@ function reply(cID, prefix, client, msg) {
         .replace(commandKeyword + " ", "")
         .split(" ");
 
-    //console.log(`User: ${client.user.id}`);
     console.log(`Arguments: ${args}`);
     console.log(commandKeyword);
     console.log(args.toString());
@@ -195,7 +194,9 @@ function reply(cID, prefix, client, msg) {
     }
 
     if (validMessage) {
+        console.log("----------------------------------------");
         console.log(messageString);
+        console.log("----------------------------------------");
     }
     return validMessage;
 }
@@ -211,7 +212,6 @@ function rng(min, max) {
         result = Math.floor((Math.random() * max) + 1);
     }
     console.log(result);
-    //console.log(result);
     return result;
 }
 
