@@ -1,20 +1,20 @@
 const fs = require("fs");
+const readline = require("readline-sync");
 const Discord = require("discord.js");
 const reply = require("./reply");
 const recorder = require("./recorder");
 const client = new Discord.Client();
 const fileName = "login/loginToken";
 
-const token = process.argv[2];
-console.log(token);
-const creatorID = process.argv[3];
-console.log(creatorID);
+const token = readline.question("Please enter your login token: ", {
+    hideEchoBack: true,
+});
 
-//recorder.recordForbiddenWord();
+const creatorID = readline.question("Please enter the creator's client ID: ");
 
 function errorMessage(msg){
     msg.channel.send("???");
-};
+}
 
 client.on("ready", () => {
     client.user.setStatus("available");
@@ -23,7 +23,7 @@ client.on("ready", () => {
             type: "PLAYING",
             name: `with my creator's feelings`
         }
-    })
+    });
     console.log("IT'S ALIIIIIIVE!");
     console.log(`*cough cough* ${client.user.tag} is online.`);
 });
