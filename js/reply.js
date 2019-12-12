@@ -96,7 +96,12 @@ validCommands.push(new commandLib.Command("Rembrandt", () => {
     return true;
 }));
 validCommands.push(new commandLib.Command("Stormchaser", () => {
-    message.channel.send("Soon...");
+    sendImage(`"Deus Volt": The term is a misnomer, as it is actually a measurement of power, `
+        + `rather than potential difference. It was previously referred to as a "Deus Watt", `
+        + `but was later changed due to the fact that `
+        + `most storm clerics agreed that the latter made for a more intimidating battle-cry.\n`
+        + "(image created on LogoMakr.com)",
+        "icons/stormchaser.PNG");
     return true;
 }));
 validCommands.push(new commandLib.Command("Alistar", () => {
