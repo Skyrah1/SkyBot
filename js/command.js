@@ -1,9 +1,10 @@
 class Command{
 
     #keyword;
+    #description;
     #func;
 
-    constructor(keyword, func){
+    constructor(keyword, description, func){
         this.#keyword = keyword;
         this.#func = func;
     }
