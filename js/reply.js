@@ -222,11 +222,11 @@ validCommands.push(new commandLib.Command(
     "I mean...you're using it right now, so...",
     () => {
         let pm = "Here's the list of commands:\n";
-        pm += "```";
+        //pm += "```";
         for (let i in validCommands){
-            pm += `\n${validCommands[i].getKeyword()} - ${validCommands[i].getDescription()}`;
+            pm += `\n**${validCommands[i].getKeyword()}** - ${validCommands[i].getDescription()}`;
         }
-        pm += "\n```";
+        //pm += "\n```";
         message.author.send(pm);
         messageString = "Alright, I've sent you the list of my commands.";
         message.channel.send(messageString);
