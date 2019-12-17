@@ -1,10 +1,12 @@
 class Command{
 
     #keyword;
+    #description;
     #func;
 
-    constructor(keyword, func){
+    constructor(keyword, description, func){
         this.#keyword = keyword;
+        this.#description = description;
         this.#func = func;
     }
 
@@ -14,6 +16,14 @@ class Command{
         } else {
             return false;
         }
+    }
+
+    getKeyword(){
+        return this.#keyword;
+    }
+
+    getDescription(){
+        return this.#description;
     }
 
     toString(){

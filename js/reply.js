@@ -11,7 +11,10 @@ var creatorID;
 const validCommands = [];
 //const comboList = [];
 
-validCommands.push(new commandLib.Command("helloWorld", () => {
+validCommands.push(new commandLib.Command(
+    "helloWorld",
+    "A simple 'Hello World' command.",
+    () => {
     messageString = "Hello World!\n" +
         "...we've been over this.\n";
     if (message.guild != null && message.guild.members.get(creatorID)) {
@@ -24,13 +27,19 @@ validCommands.push(new commandLib.Command("helloWorld", () => {
     return true;
 }));
 
-validCommands.push(new commandLib.Command("testPingReply", () => {
+validCommands.push(new commandLib.Command(
+    "testPingReply",
+    "Do I see you?",
+    () => {
     messageString = `I see you, ${message.author.toString()}.`;
     message.channel.send(messageString);
     return true;
 }));
 
-validCommands.push(new commandLib.Command("testPing", () => {
+validCommands.push(new commandLib.Command(
+    "insult",
+    "State-of-the-art roasting software.",
+    () => {
     let userArray = message.mentions.users.array();
     let gottem = false;
     if (userArray.length === 0){
@@ -49,7 +58,11 @@ validCommands.push(new commandLib.Command("testPing", () => {
     return true;
 }));
 
-validCommands.push(new commandLib.Command("rand", (args) => {
+validCommands.push(new commandLib.Command(
+    "rand",
+    "Generate a random number between 1 and the number you give me, "
+    + "or give me two and I'll give you a number between those.",
+    (args) => {
     var result = 0;
     if (args.length === 1) {
         result = rng(0, args[0]);
@@ -68,34 +81,48 @@ validCommands.push(new commandLib.Command("rand", (args) => {
 
 }));
 
-validCommands.push(new commandLib.Command("Tate", () => {
+validCommands.push(new commandLib.Command(
+    "Tate",
+    "Everyone's favorite cleric (don't tell Nicholas). Also a dork.",
+    () => {
     sendImage(
         `A cinnamon roll capable of breaking your knees and smashing your skull in.\n`
         + `(image created on LogoMakr.com)\n`,
         "icons/tate.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Phibi", () => {
+validCommands.push(new commandLib.Command(
+    "Phibi",
+    "Literal unkillable ray of sunshine and death.",
+    () => {
     sendImage("She would die for you, if only she were capable of actually dying.\n"
         + "(image created on LogoMakr.com)\n",
         "icons/phibi.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Gaia", () => {
+validCommands.push(new commandLib.Command(
+    "Gaia",
+    "What a Dire Tiefling would look like.",
+    () => {
     sendImage("Her mischievous antics belie a dark and painful past..."
         + "but we don't have time to unpack *all* that.\n"
         + "(image created on LogoMakr.com)\n",
         "icons/gaia.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Rembrandt", () => {
+validCommands.push(new commandLib.Command(
+    "Rembrandt",
+    "Demoted to magi-tech support.",
+    () => {
     sendImage("You will know bitter while his victory will be sweet..."
         + "or maybe that's just his brownies.\n"
         + "(image created on LogoMakr.com)\n",
         "icons/rembrandt.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Stormchaser", () => {
+validCommands.push(new commandLib.Command("Stormchaser",
+    "Dad, could you please stop Nick from dying FOR FIVE MINUTES?!",
+    () => {
     sendImage(`"Deus Volt": The term is a misnomer, as it is actually a measurement of power, `
         + `rather than potential difference. It was previously referred to as a "Deus Watt", `
         + `but was later changed due to the fact that `
@@ -104,20 +131,31 @@ validCommands.push(new commandLib.Command("Stormchaser", () => {
         "icons/stormchaser.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Alistar", () => {
+validCommands.push(new commandLib.Command("Alistar",
+    "If Alistar dies, we kill Alistar. (The other one. Again.)",
+    () => {
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new commandLib.Command("See-rius", () => {
+validCommands.push(new commandLib.Command(
+    "See-rius",
+    "Bounty-hunter/babysitter. Secretly a ranger with Favored Enemy: Mages.",
+    () => {
     message.channel.send("Soon...");
     return true;
 }));
-validCommands.push(new commandLib.Command("DM", () => {
+validCommands.push(new commandLib.Command(
+    "DM",
+    "Competitive blood donor. Please don't bleed on my code.",
+    () => {
     message.channel.send("Soon...");
     return true;
 }));
 
-validCommands.push(new commandLib.Command("iLoveYou", () => {
+validCommands.push(new commandLib.Command(
+    "iLoveYou",
+    "I-it's not like I wanted you to use this command, or anything...",
+    () => {
     const responses = [
         `I love you too, ${message.author.toString()}.\n`,
         "I know.",
@@ -138,7 +176,10 @@ validCommands.push(new commandLib.Command("iLoveYou", () => {
     return true;
 }));
 
-validCommands.push(new commandLib.Command("comboList", () => {
+validCommands.push(new commandLib.Command(
+    "comboList",
+    "The real reason everyone uses me. Use it to display the list of known combos for D&D characters.",
+    () => {
     //comboList.clean();
     messageString += "Here is the list of combo keywords:\n\n";
     const comboList = comboLib.getComboList();
@@ -152,7 +193,10 @@ validCommands.push(new commandLib.Command("comboList", () => {
     return true;
 }));
 
-validCommands.push(new commandLib.Command("combo", (args) => {
+validCommands.push(new commandLib.Command(
+    "combo",
+    "Use: !sky combo [womboComboName]",
+    (args) => {
     const comboList = comboLib.getComboList();
     var comboFound = false;
     console.log(`${comboList.length}`);
@@ -172,6 +216,22 @@ validCommands.push(new commandLib.Command("combo", (args) => {
     message.channel.send(messageString);
     return true;
 }));
+
+validCommands.push(new commandLib.Command(
+    "help",
+    "I mean...you're using it right now, so...",
+    () => {
+        let pm = "Here's the list of commands:\n";
+        pm += "```";
+        for (let i in validCommands){
+            pm += `\n${validCommands[i].getKeyword()} - ${validCommands[i].getDescription()}`;
+        }
+        pm += "\n```";
+        message.author.send(pm);
+        messageString = "Alright, I've sent you the list of my commands.";
+        message.channel.send(messageString);
+        return true;
+    }));
 
 
 for (let i = 0; i < validCommands.length; i++) {
