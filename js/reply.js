@@ -136,7 +136,8 @@ validCommands.push(new commandLib.Command("Alistair",
     () => {
     sendImage("Lemme just take a moment to say the fact that the CAT is an ex-PIRATE "
         + "that used to spend all day every day surrounded by WATER is super ironic.\n"
-        + "Here's to hoping we see Lard again!",
+        + "Here's to hoping we see Lard again!"
+        + "(image created on LogoMakr.com)",
         "icons/alistair.PNG");
     return true;
 }));
