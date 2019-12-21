@@ -131,10 +131,13 @@ validCommands.push(new commandLib.Command("Stormchaser",
         "icons/stormchaser.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Alistar",
-    "If Alistar dies, we kill Alistar. (The other one. Again.)",
+validCommands.push(new commandLib.Command("Alistair",
+    "If Alistair dies, we kill Alistair. (The other one. Again.)",
     () => {
-    message.channel.send("Soon...");
+    sendImage("Lemme just take a moment to say the fact that the CAT is an ex-PIRATE "
+        + "that used to spend all day every day surrounded by WATER is super ironic.\n"
+        + "Here's to hoping we see Lard again!",
+        "icons/alistair.PNG");
     return true;
 }));
 validCommands.push(new commandLib.Command(
