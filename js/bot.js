@@ -37,7 +37,7 @@ client.on("message", msg => {
             console.log("Message sent!");
         }
     }
-    if (msg.content.toLowerCase().includes(" vore ")){
+    if (msg.content.toLowerCase().includes("vore") && msg.author.username != "SkyBot#6709"){
         let diff = recorder.recordForbiddenWord();
         if (diff < 0){
             msg.channel.send(`You leave me no choice, ${msg.author.toString()}.\n`
