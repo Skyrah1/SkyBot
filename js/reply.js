@@ -145,14 +145,28 @@ validCommands.push(new commandLib.Command(
     "See-rius",
     "Bounty-hunter/babysitter. Secretly a ranger with Favored Enemy: Mages.",
     () => {
-    message.channel.send("Soon...");
+    sendImage("Mage Slayers are not to be trusted...but he makes it so hard not to!\n"
+        + "(image created on LogoMakr.com)",
+        "icons/see-rius.PNG");
     return true;
 }));
 validCommands.push(new commandLib.Command(
     "DM",
     "Competitive blood donor. Please don't bleed on my code.",
     () => {
-    message.channel.send("Soon...");
+    sendImage("My deepest thanks to Nik for not TPKing Dad's party on a regular basis.\n"
+        + "Also for not filling my code with useless functions like SOMEBODY here.\n"
+        + "(image created on LogoMakr.com)",
+        "icons/dm.PNG");
+    return true;
+}));
+validCommands.push(new commandLib.Command(
+    "entireTeam",
+    "How many PCs does it take to change a lightbulb?",
+    () => {
+    sendImage("Great, the gang's all here! Now we can die together!\n"
+        + "(image created on LogoMakr.com)",
+        "icons/entireTeam.PNG");
     return true;
 }));
 
