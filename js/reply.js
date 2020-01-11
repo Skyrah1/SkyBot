@@ -225,6 +225,13 @@ validCommands.push(new commandLib.Command(
             comboFound = true;
             messageString += `**${combo.getName()}**\n`;
             messageString += `${combo.getDescription()}\n\n`;
+            let extensions = combo.getExtensions();
+            for (let i = 0; i < extensions.length; i++){
+                messageString += `${extensions[i]}\n`
+            }
+            if (extensions.length >= 1){
+                messageString += "\n";
+            }
             messageString += `*${combo.getFlavour()}*`;
         }
     }

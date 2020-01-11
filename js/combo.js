@@ -7,12 +7,14 @@ class Combo{
     #keyword;
     #name;
     #description;
+    #extensions;
     #flavour;
 
-    constructor(keyword, name, description, flavour){
+    constructor(keyword, name, description, extensions, flavour){
         this.#keyword = keyword;
         this.#name = name;
         this.#description = description;
+        this.#extensions = extensions;
         this.#flavour = flavour;
     }
 
@@ -26,6 +28,10 @@ class Combo{
 
     getDescription(){
         return this.#description;
+    }
+
+    getExtensions(){
+        return this.#extensions;
     }
 
     getFlavour(){
@@ -48,15 +54,26 @@ function getComboList(){
         }).split("\n");
         //console.log(comboName);
         if (comboArgs.length >= 3){
-            var keyword = file.toString().replace(".txt", "");
-            var comboFlavor = "";
-            for (i = 2; i < comboArgs.length; i++){
+            let keyword = file.toString().replace(".txt", "");
+            let comboFlavor = "";
+            let comboExtensions = [];
+            let lineNum = 2;
+            let noMoreExtensions = false;
+            while (!noMoreExtensions){
+                if (comboArgs[lineNum].startsWith("Extension:")){
+                    comboExtensions.push(comboArgs[lineNum]);
+                    lineNum++;
+                } else {
+                    noMoreExtensions = true;
+                }
+            }
+            for (i = lineNum; i < comboArgs.length; i++){
                 comboFlavor += comboArgs[i];
                 if (i != comboArgs.length - 1){
                     comboFlavor += "\n";
                 }
             }
-            comboList.push(new Combo(keyword,comboArgs[0], comboArgs[1], comboFlavor));
+            comboList.push(new Combo(keyword,comboArgs[0], comboArgs[1], comboExtensions, comboFlavor));
             //console.log(comboArgs[0]);
         } else {
             console.log(`Invalid/incomplete combo file: ${file}`)
