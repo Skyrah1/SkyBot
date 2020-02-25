@@ -142,12 +142,12 @@ validCommands.push(new commandLib.Command("Alistair",
     return true;
 }));
 validCommands.push(new commandLib.Command(
-    "See-rius",
+    "See-Reos",
     "Bounty-hunter/babysitter. Secretly a ranger with Favored Enemy: Mages.",
     () => {
     sendImage("Mage Slayers are not to be trusted...but he makes it so hard not to!\n"
         + "(image created on LogoMakr.com)",
-        "icons/see-rius.PNG");
+        "icons/see-reos.PNG");
     return true;
 }));
 validCommands.push(new commandLib.Command(

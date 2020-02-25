@@ -1,0 +1,5 @@
+Nepenthes
+Gaia casts Spike Growth to reduce the enemy's movement. As they attempt to get out (taking damage in the process), Phibi casts Grasping Vine in the center of the existing Spike Growth spell, pulling the enemy back into it and causing them to take more damage. On subsequent turns, the vine can keep pulling the enemy back in.
+Extension: Symbiosis - After Phibi casts Grasping Vine, Tate casts Insect Plague centered on the area. Now the enemy is slowed, taking damage, and their vision is lightly obscured.
+"Leaf me alone - I'm bushed!"
+(bonus points to whoever gets this reference)

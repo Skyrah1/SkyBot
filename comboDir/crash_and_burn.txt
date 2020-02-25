@@ -1,4 +1,5 @@
 Crash and Burn
-See-rius casts Booming Blade on an enemy, followed by Phibi's Flaming Sphere. This forces the enemy to either move (and take damage) or stand and fight (and also take damage).
+See-reos casts Booming Blade on an enemy, followed by Phibi's Flaming Sphere. This forces the enemy to either move (and take damage) or stand and fight (and also take damage).
+Extension: Grounded - Tate casts Guardian of Faith on top of the enemy, punishing them more for moving away.
 "A strange game.
 The only winning move is not to play."
