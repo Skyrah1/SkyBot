@@ -252,6 +252,7 @@ validCommands.push(new commandLib.Command(
         messageString = "Alright, here you go: https://docs.google.com/spreadsheets/d/11W9VngBQh1i703qbFo1t8vampNjGu-pzwYBhoJ_A1os/edit?usp=sharing\n"
             + "(viewing only, ask my creator for the edit link)"
         message.channel.send(messageString)
+        return true;
     }
 ))
 
