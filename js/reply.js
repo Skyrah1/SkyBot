@@ -243,6 +243,19 @@ validCommands.push(new commandLib.Command(
 }));
 
 validCommands.push(new commandLib.Command(
+    "sh*tlist",
+    "Use this to bring up the link to the Stormbringer Sh*tlist, "
+    + "to keep track of people who've wronged you and/or other personal "
+    + "objectives that don't involve revenge.\n"
+    + "(viewing only, ask my creator for the edit link)",
+    () => {
+        messageString = "Alright, here you go: https://docs.google.com/spreadsheets/d/11W9VngBQh1i703qbFo1t8vampNjGu-pzwYBhoJ_A1os/edit?usp=sharing\n"
+            + "(viewing only, ask my creator for the edit link)"
+        message.channel.send(messageString)
+    }
+))
+
+validCommands.push(new commandLib.Command(
     "help",
     "I mean...you're using it right now, so...",
     () => {
