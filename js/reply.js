@@ -1,7 +1,7 @@
 //const Discord = require("discord.js");
 const commandLib = require("./command");
 const comboLib = require("./combo");
-
+const rng = require("./rng");
 
 var botClient;
 var message;
@@ -303,20 +303,6 @@ function reply(cID, prefix, client, msg) {
         console.log("----------------------------------------");
     }
     return validMessage;
-}
-
-function rng(min, max) {
-    console.log(`Min and max: ${min}, ${max}`);
-    var difference = parseInt(max) - parseInt(min);
-    var result = 0;
-    if (difference != max) {
-        result = Math.floor((Math.random() * (difference + 1)));
-        result += parseInt(min);
-    } else {
-        result = Math.floor((Math.random() * max) + 1);
-    }
-    console.log(result);
-    return result;
 }
 
 function sendImage(string, image){

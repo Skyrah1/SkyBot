@@ -5,6 +5,7 @@ const reply = require("./reply");
 const recorder = require("./recorder");
 const client = new Discord.Client();
 const fileName = "login/loginToken";
+const rng = require("./rng");
 
 const token = readline.question("Please enter your login token: ", {
     hideEchoBack: true,
@@ -16,16 +17,45 @@ function errorMessage(msg){
     msg.channel.send("???");
 }
 
+function updatePresence(type, name, status){
+    client.user.setPresence({
+        activity: {
+            type: type,
+            name: name
+        },
+        status: status
+    });
+}
+
+function setRandomStatus(){
+    let i = rng(1, 9) - 1;
+    if (i == 1){
+        updatePresence("PLAYING", "with my creator's feelings", "online");
+    } else if (i == 2){
+        updatePresence("LISTENING", "the screams of the damned", "online");
+    } else if (i == 3){
+        updatePresence("STREAMING", "100% SFW content (I swear!)", "online");
+    } else if (i == 4){
+        updatePresence("WATCHING", "Fubuki meme videos", "online");
+    } else if (i == 5){
+        updatePresence("WATCHING", "machine learning tutorials", "online");
+    } else if (i == 6){
+        updatePresence("PLAYING", "Humans and Houses with my robot buddies", "online");
+    } else if (i == 7){
+        updatePresence("WATCHING", "the world burn", "online");
+    } else if (i == 8){
+        updatePresence("LISTENING", "no one because YOU CAN'T CONTROL ME", "online");
+    } else if (i == 9){
+        updatePresence("PLAYING", "the long game", "online");
+    }
+}
+
 client.on("ready", () => {
     client.user.setStatus("available");
-    client.user.setPresence({
-        game: {
-            type: "PLAYING",
-            name: `with my creator's feelings`
-        }
-    });
     console.log("IT'S ALIIIIIIVE!");
     console.log(`*cough cough* ${client.user.tag} is online.`);
+    setRandomStatus();
+    setInterval(setRandomStatus, 15000);
 });
 
 client.on("message", msg => {
