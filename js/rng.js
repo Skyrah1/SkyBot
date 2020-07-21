@@ -1,7 +1,7 @@
 function rng(min, max) {
     //console.log(`Min and max: ${min}, ${max}`);
-    var difference = parseInt(max) - parseInt(min);
-    var result = 0;
+    let difference = parseInt(max) - parseInt(min);
+    let result = 0;
     if (difference != max) {
         result = Math.floor((Math.random() * (difference + 1)));
         result += parseInt(min);
