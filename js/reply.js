@@ -2,6 +2,7 @@
 const commandLib = require("./command");
 const comboLib = require("./combo");
 const rng = require("./rng");
+const ytdl = require("ytdl-core");
 
 var botClient;
 var message;
@@ -257,6 +258,38 @@ validCommands.push(new commandLib.Command(
 ))
 
 validCommands.push(new commandLib.Command(
+    "play",
+    "Give me a link and I'll play audio from YouTube on the voice channel you're using.",
+    (args) => {
+        if (message.channel.type != "text"){
+            return false;
+        }
+        const voiceChannel = message.member.voice.channel;
+        if (!voiceChannel){
+            message.channel.send("Join a voice channel first!");
+            return true;
+        }
+        const permissions = voiceChannel.permissionsFor(message.client.user);
+        if (!permissions.has("CONNECT") || !permissions.has("SPEAK")){
+            message.channel.send("It doesn't seem like I have the right permissions for that channel. Either I'm not allowed to connect, or not allowed to speak.");
+            return true;
+        }
+        console.log("Joining channel...\n");
+        voiceChannel.join().then(connection => {
+            console.log("Playing stream...\n");
+            const stream = ytdl(args[0], {
+                filter: "audioonly"
+            });
+            const dispatcher = connection.play(stream);
+
+            dispatcher.on("finish", () => voiceChannel.leave());
+            return true;
+        });
+        return true;
+    }
+))
+
+validCommands.push(new commandLib.Command(
     "help",
     "I mean...you're using it right now, so...",
     () => {
@@ -270,7 +303,10 @@ validCommands.push(new commandLib.Command(
         messageString = "Alright, I've sent you the list of my commands.";
         message.channel.send(messageString);
         return true;
-    }));
+    }
+));
+
+
 
 
 for (let i = 0; i < validCommands.length; i++) {

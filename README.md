@@ -6,6 +6,9 @@ Before running, install dependencies by typing "npm install <dependency>" into t
 The following dependencies are needed:
 - discord.js
 - readfile-sync
+- node-opus
+- ytdl-core
+- ffmpeg-static
 
 # Running
 NOTE: An instance of this bot is running on the cloud. If you use the same login token, you will receive messages from each instance of the bot.
