@@ -9,7 +9,9 @@ var message;
 var messageString = "";
 var creatorID;
 
+let connection;
 let playingSongs = false;
+let voiceChannel;
 
 const songQueue = [];
 const validCommands = [];
@@ -280,7 +282,7 @@ validCommands.push(new commandLib.Command(
         songQueue.push(song);
         message.channel.send(`Ok, ${songInfo.videoDetails.title} added to the queue!`);
         if (!playingSongs){
-            playSong(song);
+            playSong(songQueue.shift());
         }
         return true;
     }
@@ -290,14 +292,44 @@ validCommands.push(new commandLib.Command(
     "showQueue",
     "Take a look at the song queue",
     () => {
-        let queueString = "Queue: \n"
+        let queueString = "Queue: \n";
         for (let i = 0; i < songQueue.length; i++){
             queueString += `> ${i+1}: ${songQueue[i].title}\n`
+        }
+        if (songQueue.length == 0){
+            queueString = "There are no songs currently queued up!";
         }
         message.channel.send(queueString);
         return true;
     }
-))
+));
+
+validCommands.push(new commandLib.Command(
+    "skip",
+    "Don't like the current song? Lemme just casually KING CRIMSON to the next one.",
+    () => {
+        if (songQueue.length == 0){
+            voiceChannel.leave();
+            playingSongs = false;
+        } else {
+            playSong(songQueue.shift());
+        }
+        return true;
+    }
+));
+
+validCommands.push(new commandLib.Command(
+    "stop",
+    "Tired of listening? Good, I'm tired of playing songs, lemme rest!",
+    () => {
+        while (songQueue.length > 0){
+            songQueue.pop();
+        }
+        voiceChannel.leave();
+        playing = false;
+        return true;
+    }
+));
 
 validCommands.push(new commandLib.Command(
     "help",
@@ -316,11 +348,11 @@ validCommands.push(new commandLib.Command(
     }
 ));
 
-function playSong(song){
+async function playSong(song){
     if (message.channel.type != "text"){
         return false;
     }
-    const voiceChannel = message.member.voice.channel;
+    voiceChannel = message.member.voice.channel;
     if (!voiceChannel){
         message.channel.send("Join a voice channel first!");
         return true;
@@ -331,36 +363,33 @@ function playSong(song){
         return true;
     }
     console.log("Joining channel...\n");
-    voiceChannel.join().then(connection => {
-        console.log("Playing stream...\n");
-        try {
-            const stream = ytdl(song.url, {
-                filter: "audioonly",
-                highWaterMark: 1024 * 1024 * 10
-            });
-            const dispatcher = connection.play(stream);
-            playingSongs = true;
-            dispatcher.setVolume(0.1);
+    connection = await voiceChannel.join();
+    console.log("Playing stream...\n");
+    try {
+        const stream = ytdl(song.url, {
+            filter: "audioonly",
+            highWaterMark: 1024 * 1024 * 10
+        });
+        const dispatcher = connection.play(stream);
+        playingSongs = true;
+        dispatcher.setVolume(0.1);
 
-            dispatcher.on("finish", () => {
-                if (songQueue.length == 0){
-                    voiceChannel.leave();
-                    playingSongs = false;
-                } else {
-                    playSong(songQueue.shift());
-                }
-                
-            });
+        dispatcher.on("finish", () => {
+            if (songQueue.length == 0){
+                voiceChannel.leave();
+                playingSongs = false;
+            } else {
+                playSong(songQueue.shift());
+            }
+            
+        });
 
-        } catch (err){
-            message.channel.send("Something's gone wrong. I'll tell dad to fix it ASAP.");
-            errorMessage = "Something's gone wrong with me!\n" + err.message;
-            playingSongs = false;
-            botClient.users.resolve(creatorID).send(errorMessage);
-        }
-        console.log("Beat up a pineapple");
-        
-    });
+    } catch (err){
+        message.channel.send("Something's gone wrong. I'll tell dad to fix it ASAP.");
+        errorMessage = "Something's gone wrong with me!\n" + err.message;
+        playingSongs = false;
+        botClient.users.resolve(creatorID).send(errorMessage);
+    }
     return true;
 }
 
