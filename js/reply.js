@@ -9,6 +9,9 @@ var message;
 var messageString = "";
 var creatorID;
 
+let playingSongs = false;
+
+const songQueue = [];
 const validCommands = [];
 //const comboList = [];
 
@@ -260,39 +263,38 @@ validCommands.push(new commandLib.Command(
 validCommands.push(new commandLib.Command(
     "play",
     "Give me a link and I'll play audio from YouTube on the voice channel you're using.",
-    (args) => {
-        if (message.channel.type != "text"){
-            return false;
+    async (args) => {
+        const songInfo = await ytdl.getInfo(args[0]);
+        const song = {title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url};
+        playSong(song);
+        return true;
+    }
+));
+
+validCommands.push(new commandLib.Command(
+    "queue",
+    "Add a YT link to the song queue, and I'll play it once I'm done with this one.",
+    async (args) => {
+        const songInfo = await ytdl.getInfo(args[0]);
+        const song = {title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url}
+        songQueue.push(song);
+        message.channel.send(`Ok, ${songInfo.videoDetails.title} added to the queue!`);
+        if (!playingSongs){
+            playSong(song);
         }
-        const voiceChannel = message.member.voice.channel;
-        if (!voiceChannel){
-            message.channel.send("Join a voice channel first!");
-            return true;
+        return true;
+    }
+));
+
+validCommands.push(new commandLib.Command(
+    "showQueue",
+    "Take a look at the song queue",
+    () => {
+        let queueString = "Queue: \n"
+        for (let i = 0; i < songQueue.length; i++){
+            queueString += `> ${i+1}: ${songQueue[i].title}\n`
         }
-        const permissions = voiceChannel.permissionsFor(message.client.user);
-        if (!permissions.has("CONNECT") || !permissions.has("SPEAK")){
-            message.channel.send("It doesn't seem like I have the right permissions for that channel. Either I'm not allowed to connect, or not allowed to speak.");
-            return true;
-        }
-        console.log("Joining channel...\n");
-        voiceChannel.join().then(connection => {
-            console.log("Playing stream...\n");
-            try {
-                const stream = ytdl(args[0], {
-                    filter: "audioonly",
-                    highWaterMark: 1024 * 1024 * 10
-                });
-                const dispatcher = connection.play(stream);
-                dispatcher.setVolume(0.1);
-    
-                dispatcher.on("finish", () => voiceChannel.leave());
-            } catch (err){
-                messasge.channel.send("Something's gone wrong. I'll tell dad to fix it ASAP.");
-                errorMessage = "Something's gone wrong with me!\n" + err.message;
-                client.users.get(creatorID).send(errorMessage);
-            }
-            
-        });
+        message.channel.send(queueString);
         return true;
     }
 ))
@@ -314,8 +316,53 @@ validCommands.push(new commandLib.Command(
     }
 ));
 
+function playSong(song){
+    if (message.channel.type != "text"){
+        return false;
+    }
+    const voiceChannel = message.member.voice.channel;
+    if (!voiceChannel){
+        message.channel.send("Join a voice channel first!");
+        return true;
+    }
+    const permissions = voiceChannel.permissionsFor(message.client.user);
+    if (!permissions.has("CONNECT") || !permissions.has("SPEAK")){
+        message.channel.send("It doesn't seem like I have the right permissions for that channel. Either I'm not allowed to connect, or not allowed to speak.");
+        return true;
+    }
+    console.log("Joining channel...\n");
+    voiceChannel.join().then(connection => {
+        console.log("Playing stream...\n");
+        try {
+            const stream = ytdl(song.url, {
+                filter: "audioonly",
+                highWaterMark: 1024 * 1024 * 10
+            });
+            const dispatcher = connection.play(stream);
+            playingSongs = true;
+            dispatcher.setVolume(0.1);
 
+            dispatcher.on("finish", () => {
+                if (songQueue.length == 0){
+                    voiceChannel.leave();
+                    playingSongs = false;
+                } else {
+                    playSong(songQueue.shift());
+                }
+                
+            });
 
+        } catch (err){
+            message.channel.send("Something's gone wrong. I'll tell dad to fix it ASAP.");
+            errorMessage = "Something's gone wrong with me!\n" + err.message;
+            playingSongs = false;
+            botClient.users.resolve(creatorID).send(errorMessage);
+        }
+        console.log("Beat up a pineapple");
+        
+    });
+    return true;
+}
 
 for (let i = 0; i < validCommands.length; i++) {
     console.log(validCommands[i].toString());
