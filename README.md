@@ -6,7 +6,7 @@ Before running, install dependencies by typing "npm install <dependency>" into t
 The following dependencies are needed:
 - discord.js
 - readfile-sync
-- node-opus
+- discordjs/opus OR node-opus (deprecated) OR opusscript
 - ytdl-core
 - ffmpeg-static
 

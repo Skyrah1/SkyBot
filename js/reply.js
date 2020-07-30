@@ -277,13 +277,21 @@ validCommands.push(new commandLib.Command(
         console.log("Joining channel...\n");
         voiceChannel.join().then(connection => {
             console.log("Playing stream...\n");
-            const stream = ytdl(args[0], {
-                filter: "audioonly"
-            });
-            const dispatcher = connection.play(stream);
-
-            dispatcher.on("finish", () => voiceChannel.leave());
-            return true;
+            try {
+                const stream = ytdl(args[0], {
+                    filter: "audioonly",
+                    highWaterMark: 1024 * 1024 * 10
+                });
+                const dispatcher = connection.play(stream);
+                dispatcher.setVolume(0.1);
+    
+                dispatcher.on("finish", () => voiceChannel.leave());
+            } catch (err){
+                messasge.channel.send("Something's gone wrong. I'll tell dad to fix it ASAP.");
+                errorMessage = "Something's gone wrong with me!\n" + err.message;
+                client.users.get(creatorID).send(errorMessage);
+            }
+            
         });
         return true;
     }
