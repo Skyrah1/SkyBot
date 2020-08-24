@@ -14,11 +14,13 @@ let playingSongs = false;
 let voiceChannel;
 
 const songQueue = [];
-const validCommands = [];
+
+const validCommands = new commandLib.CommandList();
 //const comboList = [];
 
 validCommands.push(new commandLib.Command(
     "helloWorld",
+    commandLib.MISC,
     "A simple 'Hello World' command.",
     () => {
     messageString = "Hello World!\n" +
@@ -35,6 +37,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "testPingReply",
+    commandLib.MISC,
     "Do I see you?",
     () => {
     messageString = `I see you, ${message.author.toString()}.`;
@@ -44,6 +47,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "insult",
+    commandLib.JOKE,
     "State-of-the-art roasting software.",
     () => {
     let userArray = message.mentions.users.array();
@@ -66,6 +70,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "rand",
+    commandLib.MISC,
     "Generate a random number between 1 and the number you give me, "
     + "or give me two and I'll give you a number between those.",
     (args) => {
@@ -89,6 +94,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "Tate",
+    commandLib.DND,
     "Everyone's favorite cleric (don't tell Nicholas). Also a dork.",
     () => {
     sendImage(
@@ -99,6 +105,7 @@ validCommands.push(new commandLib.Command(
 }));
 validCommands.push(new commandLib.Command(
     "Phibi",
+    commandLib.DND,
     "Literal unkillable ray of sunshine and death.",
     () => {
     sendImage("She would die for you, if only she were capable of actually dying.\n"
@@ -108,6 +115,7 @@ validCommands.push(new commandLib.Command(
 }));
 validCommands.push(new commandLib.Command(
     "Gaia",
+    commandLib.DND,
     "What a Dire Tiefling would look like.",
     () => {
     sendImage("Her mischievous antics belie a dark and painful past..."
@@ -118,6 +126,7 @@ validCommands.push(new commandLib.Command(
 }));
 validCommands.push(new commandLib.Command(
     "Rembrandt",
+    commandLib.DND,
     "Demoted to magi-tech support.",
     () => {
     sendImage("You will know bitter while his victory will be sweet..."
@@ -126,7 +135,9 @@ validCommands.push(new commandLib.Command(
         "icons/rembrandt.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Stormchaser",
+validCommands.push(new commandLib.Command(
+    "Stormchaser",
+    commandLib.DND,
     "Dad, could you please stop Nick from dying FOR FIVE MINUTES?!",
     () => {
     sendImage(`"Deus Volt": The term is a misnomer, as it is actually a measurement of power, `
@@ -137,7 +148,9 @@ validCommands.push(new commandLib.Command("Stormchaser",
         "icons/stormchaser.PNG");
     return true;
 }));
-validCommands.push(new commandLib.Command("Alistair",
+validCommands.push(new commandLib.Command(
+    "Alistair",
+    commandLib.DND,
     "If Alistair dies, we kill Alistair. (The other one. Again.)",
     () => {
     sendImage("Lemme just take a moment to say the fact that the CAT is an ex-PIRATE "
@@ -149,6 +162,7 @@ validCommands.push(new commandLib.Command("Alistair",
 }));
 validCommands.push(new commandLib.Command(
     "See-Reos",
+    commandLib.DND,
     "Bounty-hunter/babysitter. Secretly a ranger with Favored Enemy: Mages.",
     () => {
     sendImage("Mage Slayers are not to be trusted...but he makes it so hard not to!\n"
@@ -158,6 +172,7 @@ validCommands.push(new commandLib.Command(
 }));
 validCommands.push(new commandLib.Command(
     "DM",
+    commandLib.DND,
     "Competitive blood donor. Please don't bleed on my code.",
     () => {
     sendImage("My deepest thanks to Nik for not TPKing Dad's party on a regular basis.\n"
@@ -168,6 +183,7 @@ validCommands.push(new commandLib.Command(
 }));
 validCommands.push(new commandLib.Command(
     "entireTeam",
+    commandLib.DND,
     "How many PCs does it take to change a lightbulb?",
     () => {
     sendImage("Great, the gang's all here! Now we can die together!\n"
@@ -178,6 +194,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "iLoveYou",
+    commandLib.JOKE,
     "I-it's not like I wanted you to use this command, or anything...",
     () => {
     const responses = [
@@ -202,6 +219,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "comboList",
+    commandLib.DND,
     "The real reason everyone uses me. Use it to display the list of known combos for D&D characters.",
     () => {
     //comboList.clean();
@@ -219,6 +237,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "combo",
+    commandLib.DND,
     "Use: !sky combo [womboComboName]",
     (args) => {
     const comboList = comboLib.getComboList();
@@ -250,6 +269,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "sh*tlist",
+    commandLib.DND,
     "Use this to bring up the link to the Stormbringer Sh*tlist, "
     + "to keep track of people who've wronged you and/or other personal "
     + "objectives that don't involve revenge.\n"
@@ -264,6 +284,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "play",
+    commandLib.MUSIC,
     "Give me a link and I'll play audio from YouTube on the voice channel you're using.",
     async (args) => {
         const songInfo = await ytdl.getInfo(args[0]);
@@ -275,6 +296,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "queue",
+    commandLib.MUSIC,
     "Add a YT link to the song queue, and I'll play it once I'm done with this one.",
     async (args) => {
         const songInfo = await ytdl.getInfo(args[0]);
@@ -290,6 +312,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "showQueue",
+    commandLib.MUSIC,
     "Take a look at the song queue",
     () => {
         let queueString = "Queue: \n";
@@ -306,6 +329,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "skip",
+    commandLib.MUSIC,
     "Don't like the current song? Lemme just casually KING CRIMSON to the next one.",
     () => {
         if (songQueue.length == 0){
@@ -320,6 +344,7 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "stop",
+    commandLib.MUSIC,
     "Tired of listening? Good, I'm tired of playing songs, lemme rest!",
     () => {
         while (songQueue.length > 0){
@@ -333,13 +358,16 @@ validCommands.push(new commandLib.Command(
 
 validCommands.push(new commandLib.Command(
     "help",
+    commandLib.MISC,
     "I mean...you're using it right now, so...",
     () => {
         let pm = "Here's the list of commands:\n";
         //pm += "```";
+        /*
         for (let i in validCommands){
             pm += `\n**${validCommands[i].getKeyword()}** - ${validCommands[i].getDescription()}`;
-        }
+        }*/
+        pm += validCommands.toString();
         //pm += "\n```";
         message.author.send(pm);
         messageString = "Alright, I've sent you the list of my commands.";
@@ -393,9 +421,7 @@ async function playSong(song){
     return true;
 }
 
-for (let i = 0; i < validCommands.length; i++) {
-    console.log(validCommands[i].toString());
-}
+console.log(validCommands.toString());
 
 function reply(cID, prefix, client, msg) {
     message = msg;
@@ -413,9 +439,9 @@ function reply(cID, prefix, client, msg) {
     console.log(commandKeyword);
     console.log(args.toString());
 
-    for (i = 0; i < validCommands.length && !validMessage; i++) {
-        validMessage = validCommands[i].execute(commandKeyword, args);
-    }
+    
+    validMessage = validCommands.execute(commandKeyword, args);
+    
 
     if (validMessage) {
         console.log("----------------------------------------");
