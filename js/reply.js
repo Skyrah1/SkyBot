@@ -287,10 +287,16 @@ validCommands.push(new commandLib.Command(
     commandLib.MUSIC,
     "Give me a link and I'll play audio from YouTube on the voice channel you're using.",
     async (args) => {
-        const songInfo = await ytdl.getInfo(args[0]);
-        const song = {title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url};
-        playSong(song);
+        try {
+            const songInfo = await ytdl.getInfo(args[0]);
+            const song = {title: songInfo.videoDetails.title, url: songInfo.videoDetails.video_url};
+            playSong(song);
+            
+        } catch (e){
+            console.log(e);
+        }
         return true;
+        
     }
 ));
 
